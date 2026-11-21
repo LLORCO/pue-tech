@@ -48,7 +48,7 @@ export async function GET(req: Request) {
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: story ? 24 : 12 }}>
-            <div style={{ display: "flex", fontFamily: "Bricolage", fontWeight: 800, fontSize: story ? 80 : 58, color: c.yellow, textTransform: "capitalize" }}>
+            <div style={{ display: "flex", fontFamily: "Bricolage", fontWeight: 800, fontSize: story ? 80 : 58, color: c.yellow }}>
               {q.get("date")} · {q.get("time")}
             </div>
             <div style={{ display: "flex", fontSize: story ? 44 : 32, fontWeight: 600, opacity: 0.9 }}>📍 {q.get("venue")}</div>

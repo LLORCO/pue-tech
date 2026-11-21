@@ -53,7 +53,7 @@ export function EventDetail({ slug }: { slug: string }) {
             {community.emoji} {community.name}
           </Link>
           <h1 className="mt-2 font-display text-4xl font-extrabold leading-tight sm:text-5xl">{event.title}</h1>
-          <p className="mt-4 text-lg capitalize text-white/90">
+          <p className="mt-4 text-lg text-white/90">
             {formatLongDate(event.start)} · {formatTime(event.start)}–{formatTime(event.end)}
           </p>
           <p className="text-white/80">📍 {event.online ? "En línea" : event.venue}</p>

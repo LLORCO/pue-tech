@@ -37,7 +37,7 @@ export function EmailPreview(props: Props) {
                 <h1 style={{ fontFamily: "var(--font-bricolage), Arial", fontSize: 30, lineHeight: 1.1, margin: "8px 0 12px" }}>
                   {props.event.title}
                 </h1>
-                <p style={{ margin: "0 0 4px", textTransform: "capitalize" }}>
+                <p style={{ margin: "0 0 4px" }}>
                   📅 {formatLongDate(props.event.start)} · {formatTime(props.event.start)}
                 </p>
                 <p style={{ margin: "0 0 16px" }}>📍 {props.event.online ? "En línea" : props.event.venue}</p>

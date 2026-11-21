@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { Community, TechEvent } from "@/lib/types";
-import { formatDate, formatTime } from "@/lib/format";
+import { formatParts, formatTime } from "@/lib/format";
 
 export function EventCard({ event, community }: { event: TechEvent; community?: Community }) {
-  const [dow, day, month] = formatDate(event.start).split(" ");
+  const { weekday: dow, day, month } = formatParts(event.start);
   return (
     <Link
       href={`/eventos/${event.slug}`}
