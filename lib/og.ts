@@ -15,3 +15,7 @@ export function ogUrl(event: TechEvent, community: Community, format: OgFormat):
   });
   return `/api/og?${q.toString()}`;
 }
+
+export function clampTitle(title: string, max = 70): string {
+  return title.length <= max ? title : `${title.slice(0, max - 1).trimEnd().padEnd(max - 1, " ")}…`;
+}
