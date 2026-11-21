@@ -4,7 +4,7 @@ import { validateEvent } from "./validate";
 const ok = {
   title: "Meetup",
   description: "desc",
-  communitySlug: "desarrollo-web",
+  communitySlug: "mole-y-codigo",
   start: "2026-12-01T18:00:00-06:00",
   end: "2026-12-01T20:00:00-06:00",
   venue: "Centro",

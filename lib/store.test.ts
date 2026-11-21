@@ -13,7 +13,7 @@ function memStorage(init: Record<string, string> = {}) {
 const input = {
   title: "Meetup de prueba",
   description: "desc",
-  communitySlug: "desarrollo-web",
+  communitySlug: "mole-y-codigo",
   start: "2026-12-01T18:00:00-06:00",
   end: "2026-12-01T20:00:00-06:00",
   venue: "Centro",
@@ -64,9 +64,9 @@ describe("store", () => {
 
   it("upcoming filtra por comunidad", () => {
     const now = new Date("2026-11-20T12:00:00-06:00");
-    const list = upcoming(getEvents(loadState(s)), now, "desarrollo-web");
+    const list = upcoming(getEvents(loadState(s)), now, "mole-y-codigo");
     expect(list.length).toBeGreaterThan(0);
-    expect(list.every((e) => e.communitySlug === "desarrollo-web")).toBe(true);
+    expect(list.every((e) => e.communitySlug === "mole-y-codigo")).toBe(true);
   });
 
   it("subscribersFor incluye 'todas' y las que siguen la comunidad", () => {
