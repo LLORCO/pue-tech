@@ -32,7 +32,7 @@ export function EmailPreview(props: Props) {
             {props.kind === "evento" ? (
               <>
                 <p style={{ margin: 0, color: c.cobalt, fontWeight: 700 }}>
-                  {props.community.emoji} {props.community.name} tiene algo nuevo
+                  {props.community.name} tiene algo nuevo
                 </p>
                 <h1 style={{ fontFamily: "var(--font-bricolage), Arial", fontSize: 30, lineHeight: 1.1, margin: "8px 0 12px" }}>
                   {props.event.title}

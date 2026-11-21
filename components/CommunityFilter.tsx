@@ -16,11 +16,11 @@ export function CommunityFilter({
   return (
     <div className="flex flex-wrap gap-2">
       <button className={chip(value === null)} onClick={() => onChange(null)}>
-        Todo el menú
+        Todas
       </button>
       {communities.map((c) => (
         <button key={c.slug} className={chip(value === c.slug)} onClick={() => onChange(c.slug)}>
-          {c.emoji} {c.name}
+          {c.name}
         </button>
       ))}
     </div>

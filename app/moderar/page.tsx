@@ -92,7 +92,7 @@ export default function ModerarPage() {
               <div className="min-w-0">
                 <Link href={`/eventos/${e.slug}`} className="font-display text-lg font-bold text-ink hover:text-cobalt">{e.title}</Link>
                 <p className="text-sm text-ink/70">
-                  {c?.emoji} {c?.name} · {formatDate(e.start)} {formatTime(e.start)} · propuesto por {e.submittedBy}
+                  {c?.name} · {formatDate(e.start)} {formatTime(e.start)} · propuesto por {e.submittedBy}
                 </p>
               </div>
               <div className="flex gap-2">

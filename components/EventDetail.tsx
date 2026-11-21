@@ -50,7 +50,7 @@ export function EventDetail({ slug }: { slug: string }) {
             </p>
           )}
           <Link href={`/comunidades/${community.slug}`} className="text-sm font-semibold text-yellow hover:underline">
-            {community.emoji} {community.name}
+            {community.name}
           </Link>
           <h1 className="mt-2 font-display text-4xl font-extrabold leading-tight sm:text-5xl">{event.title}</h1>
           <p className="mt-4 text-lg text-white/90">

@@ -11,7 +11,6 @@ export function ogUrl(event: TechEvent, community: Community, format: OgFormat):
     time: formatTime(event.start),
     venue: event.venue,
     community: community.name,
-    emoji: community.emoji,
   });
   return `/api/og?${q.toString()}`;
 }

@@ -3,7 +3,6 @@ export type Community = {
   name: string;
   description: string;
   topics: string[];
-  emoji: string;
   links: { label: string; url: string }[];
 };
 

@@ -24,8 +24,7 @@ export function CommunityDetail({ slug }: { slug: string }) {
       <header className="relative overflow-hidden bg-cobalt text-white">
         <TalaveraPattern className="absolute inset-0 text-white/10" />
         <div className="relative mx-auto max-w-5xl px-4 py-12">
-          <p className="text-5xl">{c.emoji}</p>
-          <h1 className="mt-2 font-display text-4xl font-extrabold sm:text-5xl">{c.name}</h1>
+          <h1 className="font-display text-4xl font-extrabold sm:text-5xl">{c.name}</h1>
           <p className="mt-3 max-w-2xl text-lg text-white/85">{c.description}</p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Link href={`/suscribete?comunidad=${c.slug}`} className="rounded-full bg-yellow px-6 py-2.5 font-bold text-cobalt-dark hover:bg-white">

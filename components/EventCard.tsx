@@ -21,7 +21,7 @@ export function EventCard({ event, community }: { event: TechEvent; community?: 
         </p>
         {community && (
           <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-cream px-2.5 py-0.5 text-xs font-semibold text-cobalt">
-            {community.emoji} {community.name}
+            {community.name}
           </p>
         )}
       </div>

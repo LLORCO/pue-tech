@@ -41,7 +41,7 @@ export async function GET(req: Request) {
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: story ? "120px 90px" : "70px 80px" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", alignSelf: "flex-start", background: c.yellow, color: c.cobaltDark, fontFamily: "Bricolage", fontWeight: 600, fontSize: story ? 40 : 30, padding: "10px 26px", borderRadius: 999 }}>
-              {q.get("emoji")} {q.get("community")}
+              {q.get("community")}
             </div>
             <div style={{ display: "flex", fontFamily: "Bricolage", fontWeight: 800, fontSize: story ? 120 : title.length > 40 ? 76 : 92, lineHeight: 1.02, marginTop: story ? 60 : 40, letterSpacing: -2 }}>
               {title}

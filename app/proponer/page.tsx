@@ -60,7 +60,7 @@ export default function ProponerPage() {
         <Field label="Comunidad" error={errors.communitySlug}>
           <select name="communitySlug" defaultValue="" className={inputCls}>
             <option value="" disabled>Elige una…</option>
-            {communities.map((c) => <option key={c.slug} value={c.slug}>{c.emoji} {c.name}</option>)}
+            {communities.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}
           </select>
         </Field>
         <div className="grid gap-4 sm:grid-cols-2">

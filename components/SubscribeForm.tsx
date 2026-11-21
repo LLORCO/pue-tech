@@ -41,10 +41,10 @@ export function SubscribeForm() {
       <div className="space-y-2">
         <p className="text-sm font-semibold text-cobalt">¿Qué le pones a tu cemita?</p>
         <div className="flex flex-wrap gap-2">
-          <button type="button" className={chip(all)} onClick={() => { setAll(true); setPicked([]); }}>🥪 Todo el menú</button>
+          <button type="button" className={chip(all)} onClick={() => { setAll(true); setPicked([]); }}>Todas</button>
           {communities.map((c) => (
             <button type="button" key={c.slug} className={chip(!all && picked.includes(c.slug))} onClick={() => toggle(c.slug)}>
-              {c.emoji} {c.name}
+              {c.name}
             </button>
           ))}
         </div>
