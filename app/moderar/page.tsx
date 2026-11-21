@@ -24,6 +24,8 @@ export default function ModerarPage() {
   const [approved, setApproved] = useState<string | null>(null);
 
   useEffect(() => {
+    // sessionStorage solo existe en el cliente; leerlo aquí evita un desajuste de hidratación.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (sessionStorage.getItem("cemita:mod") === "1") setAuthed(true);
   }, []);
 

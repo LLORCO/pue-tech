@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Community, TechEvent } from "@/lib/types";
 import { brand } from "@/lib/brand";
 import { formatLongDate, formatTime } from "@/lib/format";
@@ -42,7 +43,7 @@ export function EmailPreview(props: Props) {
                 <p style={{ margin: "0 0 16px" }}>📍 {props.event.online ? "En línea" : props.event.venue}</p>
                 <p>{props.event.description}</p>
                 <p style={{ margin: "24px 0" }}>
-                  <a href={`/eventos/${props.event.slug}`} style={cta}>Ver en Cemita</a>
+                  <Link href={`/eventos/${props.event.slug}`} style={cta}>Ver en Cemita</Link>
                 </p>
               </>
             ) : (
@@ -52,7 +53,7 @@ export function EmailPreview(props: Props) {
                 </h1>
                 <p>A partir de hoy te avisamos de los eventos de <b>{props.follows}</b>. Nada de spam, solo lo que sale del horno.</p>
                 <p style={{ margin: "24px 0" }}>
-                  <a href="/" style={cta}>Ver qué hay esta semana</a>
+                  <Link href="/" style={cta}>Ver qué hay esta semana</Link>
                 </p>
               </>
             )}
