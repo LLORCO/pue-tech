@@ -4,11 +4,15 @@ import { createEvent, setEventStatus } from "../lib/data/events";
 import { db } from "../lib/db/client";
 import { communities } from "../lib/db/schema";
 import { devCommunities, devEvents } from "../lib/seed";
+import { assertSeedTarget } from "../lib/seed-guard";
 
 async function main() {
-  if (process.env.VERCEL_ENV === "production") {
-    throw new Error("El seed de desarrollo no corre en producción.");
-  }
+  // Antes de conectar: solo bases locales, nunca una remota por accidente.
+  assertSeedTarget({
+    DATABASE_URL: process.env.DATABASE_URL,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    SEED_ALLOW_REMOTE: process.env.SEED_ALLOW_REMOTE,
+  });
   const [{ n }] = await db.select({ n: count() }).from(communities);
   if (n > 0) {
     throw new Error("Ya hay comunidades en la base; el seed solo corre sobre una base vacía.");
