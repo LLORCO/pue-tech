@@ -59,3 +59,6 @@ export const events = pgTable("events", {
 export type Community = typeof communities.$inferSelect;
 export type Event = typeof events.$inferSelect;
 export type EventWithCommunity = Event & { community: Community | null };
+
+// Tablas de Better Auth (generadas por su CLI en auth-schema.ts).
+export * from "./auth-schema";
