@@ -7,5 +7,6 @@ export default defineConfig({
   schema: ["./lib/db/schema.ts", "./lib/db/auth-schema.ts"],
   out: "./drizzle",
   dialect: "postgresql",
-  dbCredentials: { url: process.env.DATABASE_URL ?? "" },
+  // Migraciones por la conexión directa (sin pooler) de Neon cuando existe.
+  dbCredentials: { url: process.env.DATABASE_URL_UNPOOLED ?? process.env.DATABASE_URL ?? "" },
 });

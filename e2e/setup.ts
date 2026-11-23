@@ -4,7 +4,9 @@ import { execSync } from "node:child_process";
 import postgres from "postgres";
 import { serverEnv, DRAFT_TITLE } from "./env";
 
-const env = { ...process.env, ...serverEnv };
+// DATABASE_URL_UNPOOLED se fija también: drizzle.config.ts la prefiere para migrar y
+// una copia en el entorno (p. ej. de `vercel env pull`) apuntaría a otra base.
+const env = { ...process.env, ...serverEnv, DATABASE_URL_UNPOOLED: serverEnv.DATABASE_URL };
 const run = (cmd: string) => execSync(cmd, { stdio: "inherit", env });
 
 // El reset es destructivo: solo corre contra una base cuyo nombre termina en `_e2e`
