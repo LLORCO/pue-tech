@@ -1,7 +1,35 @@
 import type { EventWithCommunity } from "./db/schema";
 
 const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-const esc = (s: string) => s.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/([,;])/g, "\\$1");
+const esc = (s: string) =>
+  s
+    .replace(/\r\n?/g, "\n")
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/([,;])/g, "\\$1");
+
+const encoder = new TextEncoder();
+
+// RFC 5545 §3.1: líneas de máximo 75 octetos; la continuación va tras CRLF + espacio.
+// Se corta por puntos de código para no partir un carácter UTF-8 de varios bytes.
+function fold(line: string): string {
+  const out: string[] = [];
+  let current = "";
+  let size = 0;
+  for (const ch of line) {
+    const n = encoder.encode(ch).length;
+    const limit = out.length === 0 ? 75 : 74;
+    if (size + n > limit) {
+      out.push(current);
+      current = "";
+      size = 0;
+    }
+    current += ch;
+    size += n;
+  }
+  out.push(current);
+  return out.join("\r\n ");
+}
 
 export function toICS(event: EventWithCommunity, now: Date): string {
   const description = [
@@ -26,5 +54,7 @@ export function toICS(event: EventWithCommunity, now: Date): string {
     ...(event.registrationUrl ? [`URL:${event.registrationUrl}`] : []),
     "END:VEVENT",
     "END:VCALENDAR",
-  ].join("\r\n");
+  ]
+    .map(fold)
+    .join("\r\n");
 }

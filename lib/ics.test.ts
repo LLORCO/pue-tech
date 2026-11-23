@@ -57,3 +57,24 @@ it("evento cancelado sin comunidad ni registro", () => {
   expect(ics).not.toContain("undefined");
   expect(ics).toContain(`UID:${ev.id}@puetech`);
 });
+
+const octets = (s: string) => Buffer.byteLength(s, "utf8");
+
+it("normaliza CRLF y CR sueltos de la descripción", () => {
+  const ics = toICS({ ...ev, description: "Primera línea\r\nSegunda\rTercera" }, now);
+  expect(ics.replace(/\r\n/g, "")).not.toContain("\r");
+  const unfolded = ics.replace(/\r\n /g, "");
+  expect(unfolded).toContain("DESCRIPTION:Primera línea\\nSegunda\\nTercera\\n\\nOrganiza: Python Puebla");
+});
+
+it("pliega líneas largas a 75 octetos sin partir caracteres UTF-8", () => {
+  const long = "Taller práctico de ñandú y canción ".repeat(10);
+  const ics = toICS({ ...ev, title: long, description: "é".repeat(200) }, now);
+  const lines = ics.split("\r\n");
+  for (const line of lines) expect(octets(line)).toBeLessThanOrEqual(75);
+  expect(lines.some((l) => l.startsWith(" "))).toBe(true);
+  expect(ics).not.toContain("�");
+  const unfolded = ics.replace(/\r\n /g, "");
+  expect(unfolded).toContain(`SUMMARY:${long.replace(/,/g, "\\,")}`);
+  expect(unfolded).toContain(`DESCRIPTION:${"é".repeat(200)}\\n`);
+});
