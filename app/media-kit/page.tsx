@@ -2,141 +2,140 @@ import { brand } from "@/lib/brand";
 import type { EventWithCommunity } from "@/lib/db/schema";
 import { ogUrl } from "@/lib/og";
 import { Logo } from "@/components/Logo";
-import { TalaveraPattern } from "@/components/TalaveraPattern";
 
 export const metadata = { title: "Media kit" };
 
+const c = brand.colors;
+
 const palette = [
-  { name: "Cobalto Talavera", hex: brand.colors.cobalt, use: "Color principal, fondos y botones", dark: true },
-  { name: "Cobalto noche", hex: brand.colors.cobaltDark, use: "Pie de página y texto sobre amarillo", dark: true },
-  { name: "Amarillo yema", hex: brand.colors.yellow, use: "Acentos, llamadas a la acción, fechas" },
-  { name: "Crema pan", hex: brand.colors.cream, use: "Fondo general" },
-  { name: "Blanco azulejo", hex: brand.colors.white, use: "Tarjetas y superficies" },
-  { name: "Tinta", hex: brand.colors.ink, use: "Texto principal", dark: true },
+  { name: "Blanco", hex: c.blanco, use: "Fondo del sitio", dark: false },
+  { name: "Arena", hex: c.arena, use: "Bordes, separadores y superficies suaves", dark: false },
+  { name: "Verde", hex: c.verde, use: "Apoyo en ilustraciones y estados positivos", dark: true },
+  { name: "Bosque profundo", hex: c.bosque, use: "Fondo de imágenes para redes y pie de página", dark: true },
+  { name: "Marrón", hex: c.marron, use: "Apoyo cálido en ilustraciones", dark: true },
+  { name: "Cacao", hex: c.cacao, use: "Segundo fondo oscuro para redes", dark: true },
+  { name: "Vino", hex: c.vino, use: "Detalles: fechas, botones y la diagonal del logo", dark: true },
+  { name: "Vino claro", hex: c.vinoClaro, use: "Acento sobre fondos oscuros", dark: false },
+  { name: "Tinta", hex: c.tinta, use: "Texto principal", dark: true },
 ];
 
 const voice = [
-  { do: "¿Qué hay de nuevo en el horno?", dont: "Próximos eventos disponibles" },
-  { do: "Ponle aguacate a tu semana", dont: "Suscríbase a nuestro boletín" },
-  { do: "Este evento ya se lo comieron", dont: "Error 404: recurso no encontrado" },
+  { si: "Esta semana en Puebla: 6 eventos", no: "¡¡No te lo pierdas!! 🔥🔥" },
+  { si: "Este evento ya no está disponible", no: "Error 404" },
+  { si: "Recibe cada lunes los eventos que te interesan", no: "Suscríbase a nuestro boletín" },
 ];
 
-export default function MediaKitPage() {
-  // TODO(Task 9): la página se reescribe; por ahora un evento de muestra fijo.
-  const ev: EventWithCommunity = {
-    id: "muestra",
-    slug: "datos-abiertos-puebla",
-    title: "Datos abiertos Puebla",
-    description: "",
-    communityId: null,
-    startsAt: new Date("2026-12-04T01:00:00Z"),
-    endsAt: new Date("2026-12-04T03:00:00Z"),
-    venue: "Angelópolis",
-    online: false,
-    registrationUrl: null,
-    topics: [],
-    status: "publicado",
-    publishedAt: null,
-    createdAt: new Date("2026-01-01T00:00:00Z"),
-    updatedAt: new Date("2026-01-01T00:00:00Z"),
-    community: null,
-  };
-  const h2 = "font-display text-2xl font-extrabold text-cobalt";
+// Evento de muestra fijo: el media kit no depende de la base de datos.
+const sampleEvent: EventWithCommunity = {
+  id: "muestra",
+  slug: "datos-abiertos-puebla",
+  title: "Datos abiertos Puebla",
+  description: "",
+  communityId: null,
+  startsAt: new Date("2026-12-04T01:00:00Z"),
+  endsAt: new Date("2026-12-04T03:00:00Z"),
+  venue: "Angelópolis",
+  online: false,
+  registrationUrl: null,
+  topics: [],
+  status: "publicado",
+  publishedAt: null,
+  createdAt: new Date("2026-01-01T00:00:00Z"),
+  updatedAt: new Date("2026-01-01T00:00:00Z"),
+  community: null,
+};
 
+const h2 = "font-display text-2xl font-bold text-tinta";
+
+export default function MediaKitPage() {
   return (
-    <div>
-      <section className="relative overflow-hidden bg-cobalt text-white">
-        <TalaveraPattern className="absolute inset-0 text-white/10" />
-        <div className="relative mx-auto max-w-5xl px-4 py-14">
-          <p className="text-sm font-bold uppercase tracking-widest text-yellow">Media kit</p>
-          <h1 className="mt-2 font-display text-5xl font-extrabold">La receta de Cemita</h1>
-          <p className="mt-3 max-w-xl text-white/85">
-            Todo lo que necesitas para que Cemita se vea igual en el sitio, los correos y las redes.
-          </p>
+    <div className="mx-auto max-w-5xl space-y-20 px-4 py-16">
+      <header className="space-y-3">
+        <p className="text-sm font-medium uppercase tracking-widest text-vino">Media kit</p>
+        <h1 className="font-display text-5xl font-bold text-tinta">Identidad de {brand.name}</h1>
+        <p className="max-w-xl text-lg text-tinta/70">{brand.tagline}</p>
+      </header>
+
+      <section className="space-y-4">
+        <h2 className={h2}>Logo</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid h-40 place-items-center rounded-2xl border border-arena bg-blanco text-3xl"><Logo /></div>
+          <div className="grid h-40 place-items-center rounded-2xl bg-bosque text-3xl"><Logo light /></div>
+        </div>
+        <p className="text-sm text-tinta/70">
+          PUE/Tech en Space Grotesk bold, con la diagonal en vino (vino claro sobre fondos oscuros).
+        </p>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className={h2}>Colores</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {palette.map((p) => (
+            <div key={p.hex} className="overflow-hidden rounded-2xl border border-arena">
+              <div
+                className={`flex h-24 items-end p-3 font-mono text-sm ${p.dark ? "text-blanco" : "text-tinta"}`}
+                style={{ background: p.hex }}
+              >
+                {p.hex}
+              </div>
+              <div className="p-3">
+                <p className="font-medium">{p.name}</p>
+                <p className="text-sm text-tinta/70">{p.use}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <div className="mx-auto max-w-5xl space-y-14 px-4 py-12">
-        <section className="space-y-4">
-          <h2 className={h2}>La idea</h2>
-          <p className="max-w-2xl text-lg">
-            Como la cemita poblana, <b>trae de todo adentro</b>: todos los eventos tech de Puebla en un solo pan. La
-            identidad toma su color y sus formas de la <b>Talavera</b>: azul cobalto, amarillo y azulejos.
-          </p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className={h2}>Logo</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="grid h-40 place-items-center rounded-2xl bg-white"><Logo /></div>
-            <div className="grid h-40 place-items-center rounded-2xl bg-cobalt"><Logo light /></div>
+      <section className="space-y-4">
+        <h2 className={h2}>Tipografía</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl border border-arena p-6">
+            <p className="font-sans text-5xl font-semibold">Geist</p>
+            <p className="mt-2 text-sm text-tinta/70">Para el sitio: textos, formularios y fechas. Clara en cualquier pantalla.</p>
           </div>
-          <p className="text-sm text-ink/70">El círculo amarillo es el pan de la cemita. Úsalo solo cuando el espacio sea pequeño (avatar de redes).</p>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className={h2}>Colores</h2>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {palette.map((p) => (
-              <div key={p.hex} className="overflow-hidden rounded-2xl border border-black/5 bg-white">
-                <div className={`h-24 ${p.dark ? "text-white" : "text-ink"} flex items-end p-3 font-mono text-sm`} style={{ background: p.hex }}>
-                  {p.hex}
-                </div>
-                <div className="p-3">
-                  <p className="font-bold">{p.name}</p>
-                  <p className="text-sm text-ink/70">{p.use}</p>
-                </div>
-              </div>
-            ))}
+          <div className="rounded-2xl border border-arena p-6">
+            <p className="font-display text-5xl font-bold">Space Grotesk</p>
+            <p className="mt-2 text-sm text-tinta/70">Para titulares y redes: el logo y las imágenes de cada evento.</p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="space-y-4">
-          <h2 className={h2}>Tipografía</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl bg-white p-6">
-              <p className="font-display text-5xl font-extrabold text-cobalt">Bricolage</p>
-              <p className="mt-2 text-sm text-ink/70">Bricolage Grotesque · títulos, fechas y el logo. Con carácter, como la ciudad.</p>
+      <section className="space-y-4">
+        <h2 className={h2}>Tono de voz</h2>
+        <p className="max-w-2xl">Cercano pero cuidado: claro primero, amable siempre. Sin exclamaciones de más ni tecnicismos.</p>
+        <div className="overflow-hidden rounded-2xl border border-arena">
+          <div className="grid grid-cols-2 border-b border-arena bg-arena/40 text-sm font-medium">
+            <p className="p-3 text-verde">Sí</p>
+            <p className="p-3 text-vino">No</p>
+          </div>
+          {voice.map((v) => (
+            <div key={v.si} className="grid grid-cols-2 border-b border-arena last:border-0">
+              <p className="p-4 font-medium">{v.si}</p>
+              <p className="p-4 text-tinta/50 line-through">{v.no}</p>
             </div>
-            <div className="rounded-2xl bg-white p-6">
-              <p className="text-5xl font-semibold">Inter</p>
-              <p className="mt-2 text-sm text-ink/70">Inter · textos y formularios. Clara y fácil de leer en el celular.</p>
-            </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        <section className="space-y-4">
-          <h2 className={h2}>Tono de voz</h2>
-          <p className="max-w-2xl">Cercano, poblano y con humor, pero siempre claro: primero se entiende, luego se sonríe.</p>
-          <div className="overflow-hidden rounded-2xl bg-white">
-            {voice.map((v) => (
-              <div key={v.do} className="grid grid-cols-2 border-b border-black/5 last:border-0">
-                <p className="p-4 font-semibold text-cobalt">✅ {v.do}</p>
-                <p className="p-4 text-ink/50 line-through">{v.dont}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className={h2}>Plantillas para redes</h2>
-          <p className="max-w-2xl">
-            Cada evento genera su post (1080×1080) y su story (1080×1920) automáticamente, desde su página. Así se ven:
-          </p>
-          <div className="flex flex-wrap items-start gap-6">
-            <figure className="w-full max-w-sm space-y-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={ogUrl(ev, "post")} alt="Post de Instagram de ejemplo" className="w-full rounded-2xl shadow-lg" />
-              <a href={ogUrl(ev, "post")} download="cemita-post.png" className="text-sm font-bold text-cobalt underline">Descargar post</a>
-            </figure>
-            <figure className="w-full max-w-[14rem] space-y-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={ogUrl(ev, "story")} alt="Story de Instagram de ejemplo" className="w-full rounded-2xl shadow-lg" />
-              <a href={ogUrl(ev, "story")} download="cemita-story.png" className="text-sm font-bold text-cobalt underline">Descargar story</a>
-            </figure>
-          </div>
-        </section>
-      </div>
+      <section className="space-y-4">
+        <h2 className={h2}>Plantillas para redes</h2>
+        <p className="max-w-2xl">
+          Cada evento genera su post (1080×1080) y su story (1080×1920) automáticamente. Así se ven:
+        </p>
+        <div className="flex flex-wrap items-start gap-8">
+          <figure className="w-full max-w-sm space-y-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={ogUrl(sampleEvent, "post")} alt="Post de ejemplo" className="w-full rounded-2xl" />
+            <a href={ogUrl(sampleEvent, "post")} download="pue-tech-post.png" className="text-sm font-medium text-vino underline">Descargar post</a>
+          </figure>
+          <figure className="w-full max-w-[14rem] space-y-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={ogUrl(sampleEvent, "story")} alt="Story de ejemplo" className="w-full rounded-2xl" />
+            <a href={ogUrl(sampleEvent, "story")} download="pue-tech-story.png" className="text-sm font-medium text-vino underline">Descargar story</a>
+          </figure>
+        </div>
+      </section>
     </div>
   );
 }

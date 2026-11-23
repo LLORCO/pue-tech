@@ -1,6 +1,27 @@
-import type { Community, TechEvent } from "./types";
+// Datos ficticios, solo para desarrollo (`npm run db:seed`). Producción arranca vacía.
 
-export const seedCommunities: Community[] = [
+type Community = {
+  slug: string;
+  name: string;
+  description: string;
+  topics: string[];
+  links: { label: string; url: string }[];
+};
+
+type RawEvent = {
+  slug: string;
+  title: string;
+  description: string;
+  communitySlug: string;
+  start: string; // ISO con offset -06:00
+  end: string;
+  venue: string;
+  registrationUrl: string;
+  online?: boolean;
+  topics?: string[];
+};
+
+const communities: Community[] = [
   {
     slug: "mole-y-codigo",
     name: "Mole & Código",
@@ -45,10 +66,7 @@ export const seedCommunities: Community[] = [
   },
 ];
 
-type SeedEvent = Omit<TechEvent, "status" | "submittedBy" | "online" | "topics"> &
-  Partial<Pick<TechEvent, "status" | "online" | "topics" | "submittedBy">>;
-
-const raw: SeedEvent[] = [
+const raw: RawEvent[] = [
   {
     slug: "taller-react-desde-cero",
     title: "Taller: React desde cero",
@@ -183,18 +201,10 @@ const raw: SeedEvent[] = [
     venue: "Cervecería en el Barrio de Analco",
     registrationUrl: "https://example.com/arduino",
     topics: ["Hardware"],
-    status: "pendiente",
-    submittedBy: "Luis (Chalupa Hackers)",
   },
 ];
 
-export const seedEvents: TechEvent[] = raw.map((e) => ({
-  online: false,
-  topics: [],
-  status: "aprobado",
-  submittedBy: "Moderación Cemita",
-  ...e,
-}));
+const seedEvents = raw.map((e) => ({ online: false, topics: [] as string[], ...e }));
 
 // --- Datos ficticios para desarrollo (`npm run db:seed`) ---------------------
 // Derivados de los datos del MVP. Las fechas se desplazan en días completos para
@@ -204,7 +214,7 @@ import type { CommunityInput, EventInput } from "./validation";
 import type { EventStatus } from "./db/schema";
 
 // `slug` es solo la clave con la que `devEvents` refiere a la comunidad; el slug real lo genera createCommunity.
-export const devCommunities: (CommunityInput & { slug: string })[] = seedCommunities.map((c) => ({
+export const devCommunities: (CommunityInput & { slug: string })[] = communities.map((c) => ({
   slug: c.slug,
   name: c.name,
   description: c.description,
