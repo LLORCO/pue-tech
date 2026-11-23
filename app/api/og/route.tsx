@@ -10,6 +10,7 @@ const font = (f: string) => readFile(join(process.cwd(), "assets/fonts", f));
 export async function GET(req: Request) {
   const q = new URL(req.url).searchParams;
   const story = q.get("format") === "story";
+  const cancelled = q.get("status") === "cancelado";
   const W = 1080;
   const H = story ? 1920 : 1080;
   const title = clampTitle(q.get("title") || "Evento tech en Puebla");
@@ -48,7 +49,7 @@ export async function GET(req: Request) {
               color: c.vinoClaro,
             }}
           >
-            PUE/TECH · EVENTO
+            {cancelled ? "PUE/TECH · CANCELADO" : "PUE/TECH · EVENTO"}
           </div>
           <div
             style={{
@@ -65,17 +66,44 @@ export async function GET(req: Request) {
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
+          {cancelled && (
+            <div
+              style={{
+                display: "flex",
+                alignSelf: "flex-start",
+                fontFamily: "Space Grotesk",
+                fontWeight: 700,
+                fontSize: story ? 44 : 34,
+                letterSpacing: 4,
+                color: c.vinoClaro,
+                border: `4px solid ${c.vinoClaro}`,
+                borderRadius: 999,
+                padding: story ? "14px 36px" : "10px 28px",
+                marginBottom: story ? 36 : 24,
+              }}
+            >
+              CANCELADO
+            </div>
+          )}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               gap: story ? 16 : 10,
-              background: c.vino,
+              background: cancelled ? c.cacao : c.vino,
               borderRadius: 24,
               padding: story ? "48px 52px" : "34px 40px",
             }}
           >
-            <div style={{ display: "flex", fontFamily: "Space Grotesk", fontWeight: 700, fontSize: story ? 68 : 52 }}>
+            <div
+              style={{
+                display: "flex",
+                fontFamily: "Space Grotesk",
+                fontWeight: 700,
+                fontSize: story ? 68 : 52,
+                textDecoration: cancelled ? "line-through" : "none",
+              }}
+            >
               {q.get("date")} · {q.get("time")}
             </div>
             <div style={{ display: "flex", fontWeight: 600, fontSize: story ? 40 : 30 }}>{place}</div>

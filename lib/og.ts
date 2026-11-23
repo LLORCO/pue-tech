@@ -13,6 +13,7 @@ export function ogUrl(event: EventWithCommunity, format: OgFormat): string {
     venue: event.online ? "En línea" : event.venue,
     community: event.community?.name ?? "Independiente",
   });
+  if (event.status === "cancelado") q.set("status", "cancelado");
   return `/api/og?${q.toString()}`;
 }
 

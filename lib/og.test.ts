@@ -51,3 +51,7 @@ it("ogUrl usa la hora de Puebla y el nombre de la comunidad", () => {
 it("ogUrl sin comunidad manda Independiente", () => {
   expect(ogUrl({ ...event, communityId: null, community: null }, "post")).toContain("community=Independiente");
 });
+it("ogUrl marca los eventos cancelados y solo esos", () => {
+  expect(ogUrl({ ...event, status: "cancelado" }, "post")).toContain("status=cancelado");
+  expect(ogUrl(event, "post")).not.toContain("status=");
+});
