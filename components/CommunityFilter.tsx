@@ -1,28 +1,32 @@
-import type { Community } from "@/lib/types";
+import Link from "next/link";
+import type { Community } from "@/lib/db/schema";
 
 export function CommunityFilter({
   communities,
-  value,
-  onChange,
+  active,
 }: {
-  communities: Community[];
-  value: string | null;
-  onChange: (slug: string | null) => void;
+  communities: Pick<Community, "slug" | "name">[];
+  active: string | null;
 }) {
-  const chip = (active: boolean) =>
-    `rounded-full border-2 px-3 py-1 text-sm font-semibold transition ${
-      active ? "border-cobalt bg-cobalt text-white" : "border-cobalt/20 bg-white text-cobalt hover:border-cobalt"
+  const chip = (isActive: boolean) =>
+    `rounded-full border px-3 py-1 text-sm transition ${
+      isActive ? "border-tinta bg-tinta text-blanco" : "border-arena bg-white text-tinta/80 hover:border-tinta/40"
     }`;
   return (
-    <div className="flex flex-wrap gap-2">
-      <button className={chip(value === null)} onClick={() => onChange(null)}>
+    <nav aria-label="Filtrar por comunidad" className="flex flex-wrap gap-2">
+      <Link href="/" className={chip(active === null)} aria-current={active === null ? "page" : undefined}>
         Todas
-      </button>
+      </Link>
       {communities.map((c) => (
-        <button key={c.slug} className={chip(value === c.slug)} onClick={() => onChange(c.slug)}>
+        <Link
+          key={c.slug}
+          href={`/?comunidad=${encodeURIComponent(c.slug)}`}
+          className={chip(active === c.slug)}
+          aria-current={active === c.slug ? "page" : undefined}
+        >
           {c.name}
-        </button>
+        </Link>
       ))}
-    </div>
+    </nav>
   );
 }

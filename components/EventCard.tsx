@@ -1,29 +1,33 @@
 import Link from "next/link";
-import type { Community, TechEvent } from "@/lib/types";
+import type { EventWithCommunity } from "@/lib/db/schema";
 import { formatParts, formatTime } from "@/lib/format";
+import { EventStatusBadge } from "./EventStatusBadge";
 
-export function EventCard({ event, community }: { event: TechEvent; community?: Community }) {
-  const { weekday: dow, day, month } = formatParts(event.start);
+export function EventCard({ event }: { event: EventWithCommunity }) {
+  const start = event.startsAt.toISOString();
+  const { weekday, day, month } = formatParts(start);
+  const cancelled = event.status === "cancelado";
   return (
     <Link
       href={`/eventos/${event.slug}`}
-      className="group flex gap-4 rounded-2xl border-2 border-cobalt/10 bg-white p-4 transition hover:-translate-y-0.5 hover:border-cobalt hover:shadow-[4px_4px_0_var(--color-yellow)]"
+      className="group flex gap-5 rounded-xl border border-arena bg-white p-5 transition hover:border-tinta/30"
     >
-      <div className="flex w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-cobalt py-2 text-white">
-        <span className="text-xs uppercase text-yellow">{dow}</span>
-        <span className="font-display text-2xl font-extrabold leading-none">{day}</span>
-        <span className="text-xs uppercase">{month}</span>
+      <div className="flex w-14 shrink-0 flex-col items-center text-vino">
+        <span className="text-xs uppercase tracking-wide">{weekday}</span>
+        <span className="font-display text-3xl font-bold leading-none">{day}</span>
+        <span className="text-xs uppercase tracking-wide">{month}</span>
       </div>
       <div className="min-w-0 flex-1">
-        <h3 className="font-display text-lg font-bold leading-tight text-ink group-hover:text-cobalt">{event.title}</h3>
-        <p className="mt-1 text-sm text-ink/70">
-          {formatTime(event.start)} · {event.online ? "En línea" : event.venue}
+        <h3 className={`font-display text-lg font-semibold leading-tight text-tinta group-hover:underline ${cancelled ? "line-through decoration-1" : ""}`}>
+          {event.title}
+        </h3>
+        <p className="mt-1 text-sm text-tinta/70">
+          {formatTime(start)} · {event.online ? "En línea" : event.venue}
         </p>
-        {community && (
-          <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-cream px-2.5 py-0.5 text-xs font-semibold text-cobalt">
-            {community.name}
-          </p>
-        )}
+        <p className="mt-3 flex flex-wrap items-center gap-2 text-xs text-tinta/60">
+          <span>{event.community?.name ?? "Independiente"}</span>
+          <EventStatusBadge status={event.status} />
+        </p>
       </div>
     </Link>
   );

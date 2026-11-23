@@ -1,22 +1,29 @@
-import type { Community, TechEvent } from "./types";
+import type { EventWithCommunity } from "./db/schema";
 
-const stamp = (iso: string) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 const esc = (s: string) => s.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/([,;])/g, "\\$1");
 
-export function toICS(event: TechEvent, community: Community): string {
+export function toICS(event: EventWithCommunity, now: Date): string {
+  const description = [
+    event.description,
+    "",
+    `Organiza: ${event.community?.name ?? "Independiente"}`,
+    ...(event.registrationUrl ? [`Registro: ${event.registrationUrl}`] : []),
+  ].join("\n");
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Cemita//Eventos tech de Puebla//ES",
+    "PRODID:-//PUE Tech//Eventos tech de Puebla//ES",
     "BEGIN:VEVENT",
-    `UID:${event.slug}@cemita`,
-    `DTSTAMP:${stamp(new Date().toISOString())}`,
-    `DTSTART:${stamp(event.start)}`,
-    `DTEND:${stamp(event.end)}`,
+    `UID:${event.id}@puetech`,
+    `DTSTAMP:${stamp(now)}`,
+    `DTSTART:${stamp(event.startsAt)}`,
+    `DTEND:${stamp(event.endsAt)}`,
     `SUMMARY:${esc(event.title)}`,
-    `DESCRIPTION:${esc(`${event.description}\n\nOrganiza: ${community.name}\nRegistro: ${event.registrationUrl}`)}`,
-    `LOCATION:${esc(event.venue)}`,
-    `URL:${event.registrationUrl}`,
+    `DESCRIPTION:${esc(description)}`,
+    `LOCATION:${esc(event.online ? "En línea" : event.venue)}`,
+    ...(event.status === "cancelado" ? ["STATUS:CANCELLED"] : []),
+    ...(event.registrationUrl ? [`URL:${event.registrationUrl}`] : []),
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
