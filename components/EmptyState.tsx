@@ -1,12 +1,11 @@
 import Link from "next/link";
 
-export function EmptyState({ text = "No hay nada en el horno para este filtro… todavía." }: { text?: string }) {
+export function EmptyState({ text = "No hay eventos que coincidan con este filtro." }: { text?: string }) {
   return (
-    <div className="rounded-2xl border-2 border-dashed border-cobalt/20 bg-white p-8 text-center">
-      <p className="text-3xl">🥪</p>
-      <p className="mt-2 font-display text-lg font-bold text-cobalt">{text}</p>
-      <p className="mt-1 text-sm text-ink/70">
-        <Link href="/suscribete" className="font-semibold text-cobalt underline">Suscríbete</Link> y te avisamos en cuanto salga algo.
+    <div className="rounded-2xl border border-dashed border-arena bg-white p-8 text-center">
+      <p className="font-display text-lg font-bold text-tinta">{text}</p>
+      <p className="mt-1 text-sm text-tinta/70">
+        <Link href="/suscribete" className="font-medium text-vino underline">Suscríbete</Link> y te avisamos cuando haya novedades.
       </p>
     </div>
   );
