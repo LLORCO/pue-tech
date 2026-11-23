@@ -1,5 +1,5 @@
 {
-  "name": "cemita",
+  "name": "pue-tech",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,9 +10,10 @@
     "test": "vitest run",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "tsx --env-file=.env.local scripts/seed-dev.ts",
-    "typecheck": "tsc --noEmit",
-    "admin:create": "tsx --env-file=.env.local scripts/create-admin.ts"
+    "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed-dev.ts",
+    "typecheck": "next typegen && tsc --noEmit",
+    "e2e": "playwright test",
+    "admin:create": "tsx --env-file-if-exists=.env.local scripts/create-admin.ts"
   },
   "dependencies": {
     "better-auth": "^1.7.27",

@@ -5,6 +5,9 @@ import { getSessionCookie } from "better-auth/cookies";
 // base. La verificación real es requireAdmin() en cada página y Server Action.
 export function proxy(request: NextRequest) {
   if (request.nextUrl.pathname === "/panel/login") return NextResponse.next();
+  // Las Server Actions se dejan pasar: un redirect del proxy a una petición de
+  // acción rompe el cliente ("unexpected response"). requireAdmin() redirige bien.
+  if (request.headers.has("next-action")) return NextResponse.next();
   if (!getSessionCookie(request)) {
     return NextResponse.redirect(new URL("/panel/login", request.url));
   }

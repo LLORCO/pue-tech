@@ -43,3 +43,5 @@ next-env.d.ts
 .superpowers/
 .claude/
 .vercel
+/test-results
+/playwright-report
