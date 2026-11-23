@@ -82,7 +82,7 @@ it("rechaza slugs de comunidad repetidos", async () => { /* segundo insert con m
 
 **Files:**
 - Create: `lib/datetime.ts`, `lib/datetime.test.ts`, `lib/validation.ts`, `lib/validation.test.ts`
-- Delete: `lib/validate.ts`, `lib/validate.test.ts` (su lógica pasa aquí)
+- Modify: `lib/validate.ts` (deja de exportar `localToIso`; lo importa de `lib/datetime.ts`. El archivo completo se borra en Task 9 junto con `/proponer` del MVP)
 
 **Interfaces:**
 - Produces:
@@ -112,7 +112,7 @@ it("parsea links 'Etiqueta | url' y rechaza una url inválida", () => { /* … *
 ```
 
 - [ ] **Step 2:** `npx vitest run lib/datetime lib/validation` → FAIL.
-- [ ] **Step 3:** Implementar ambos módulos; actualizar imports de `localToIso` (hoy en `app/proponer/page.tsx`, se retira en Task 9; mientras, que compile).
+- [ ] **Step 3:** Implementar ambos módulos; `app/proponer/page.tsx` importa `localToIso` desde `lib/datetime.ts` y sigue compilando hasta que Task 9 lo reemplace.
 - [ ] **Step 4:** `npm test` → PASS.
 - [ ] **Step 5:** Commit `feat: validación con Zod y fechas en hora de Puebla`.
 
@@ -285,7 +285,7 @@ it("evento cancelado sin comunidad ni registro", () => {
 ### Task 9: Retirar el MVP y actualizar el media kit
 
 **Files:**
-- Delete: `lib/store.ts`, `lib/store.test.ts`, `lib/useStore.ts`, `lib/types.ts` (si ya nadie lo importa), `app/moderar/`, `app/correo/`, `components/SubscribeForm.tsx`, `components/EmailPreview.tsx`, `components/EventEmail.tsx`, `components/WelcomeEmail.tsx`, `components/TalaveraPattern.tsx`
+- Delete: `lib/validate.ts`, `lib/validate.test.ts`, `lib/store.ts`, `lib/store.test.ts`, `lib/useStore.ts`, `lib/types.ts` (si ya nadie lo importa), `app/moderar/`, `app/correo/`, `components/SubscribeForm.tsx`, `components/EmailPreview.tsx`, `components/EventEmail.tsx`, `components/WelcomeEmail.tsx`, `components/TalaveraPattern.tsx`
 - Modify: `app/proponer/page.tsx`, `app/suscribete/page.tsx`, `app/media-kit/page.tsx`
 - Create: `components/ComingSoon.tsx`
 
