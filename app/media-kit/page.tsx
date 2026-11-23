@@ -1,5 +1,5 @@
 import { brand } from "@/lib/brand";
-import { seedCommunities, seedEvents } from "@/lib/seed";
+import type { EventWithCommunity } from "@/lib/db/schema";
 import { ogUrl } from "@/lib/og";
 import { Logo } from "@/components/Logo";
 import { TalaveraPattern } from "@/components/TalaveraPattern";
@@ -22,8 +22,25 @@ const voice = [
 ];
 
 export default function MediaKitPage() {
-  const ev = seedEvents.find((e) => e.slug === "datos-abiertos-puebla")!;
-  const com = seedCommunities.find((c) => c.slug === ev.communitySlug)!;
+  // TODO(Task 9): la página se reescribe; por ahora un evento de muestra fijo.
+  const ev: EventWithCommunity = {
+    id: "muestra",
+    slug: "datos-abiertos-puebla",
+    title: "Datos abiertos Puebla",
+    description: "",
+    communityId: null,
+    startsAt: new Date("2026-12-04T01:00:00Z"),
+    endsAt: new Date("2026-12-04T03:00:00Z"),
+    venue: "Angelópolis",
+    online: false,
+    registrationUrl: null,
+    topics: [],
+    status: "publicado",
+    publishedAt: null,
+    createdAt: new Date("2026-01-01T00:00:00Z"),
+    updatedAt: new Date("2026-01-01T00:00:00Z"),
+    community: null,
+  };
   const h2 = "font-display text-2xl font-extrabold text-cobalt";
 
   return (
@@ -109,13 +126,13 @@ export default function MediaKitPage() {
           <div className="flex flex-wrap items-start gap-6">
             <figure className="w-full max-w-sm space-y-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={ogUrl(ev, com, "post")} alt="Post de Instagram de ejemplo" className="w-full rounded-2xl shadow-lg" />
-              <a href={ogUrl(ev, com, "post")} download="cemita-post.png" className="text-sm font-bold text-cobalt underline">Descargar post</a>
+              <img src={ogUrl(ev, "post")} alt="Post de Instagram de ejemplo" className="w-full rounded-2xl shadow-lg" />
+              <a href={ogUrl(ev, "post")} download="cemita-post.png" className="text-sm font-bold text-cobalt underline">Descargar post</a>
             </figure>
             <figure className="w-full max-w-[14rem] space-y-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={ogUrl(ev, com, "story")} alt="Story de Instagram de ejemplo" className="w-full rounded-2xl shadow-lg" />
-              <a href={ogUrl(ev, com, "story")} download="cemita-story.png" className="text-sm font-bold text-cobalt underline">Descargar story</a>
+              <img src={ogUrl(ev, "story")} alt="Story de Instagram de ejemplo" className="w-full rounded-2xl shadow-lg" />
+              <a href={ogUrl(ev, "story")} download="cemita-story.png" className="text-sm font-bold text-cobalt underline">Descargar story</a>
             </figure>
           </div>
         </section>

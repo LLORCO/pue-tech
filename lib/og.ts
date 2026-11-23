@@ -1,16 +1,17 @@
-import type { Community, TechEvent } from "./types";
+import type { EventWithCommunity } from "./db/schema";
 import { formatDate, formatTime } from "./format";
 
 export type OgFormat = "post" | "story";
 
-export function ogUrl(event: TechEvent, community: Community, format: OgFormat): string {
+export function ogUrl(event: EventWithCommunity, format: OgFormat): string {
+  const iso = event.startsAt.toISOString();
   const q = new URLSearchParams({
     format,
     title: event.title,
-    date: formatDate(event.start),
-    time: formatTime(event.start),
-    venue: event.venue,
-    community: community.name,
+    date: formatDate(iso),
+    time: formatTime(iso),
+    venue: event.online ? "En línea" : event.venue,
+    community: event.community?.name ?? "Independiente",
   });
   return `/api/og?${q.toString()}`;
 }
