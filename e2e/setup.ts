@@ -7,7 +7,23 @@ import { serverEnv, DRAFT_TITLE } from "./env";
 const env = { ...process.env, ...serverEnv };
 const run = (cmd: string) => execSync(cmd, { stdio: "inherit", env });
 
+// El reset es destructivo: solo corre contra una base cuyo nombre termina en `_e2e`
+// y, fuera de CI, que esté en la máquina local.
+function assertDisposable(url: string) {
+  const u = new URL(url);
+  const name = decodeURIComponent(u.pathname.slice(1));
+  if (!name.endsWith("_e2e")) {
+    throw new Error(
+      `Rechazado: la base "${name}" no termina en "_e2e"; e2e vacía la base y solo corre sobre una desechable.`,
+    );
+  }
+  if (!process.env.CI && !["localhost", "127.0.0.1"].includes(u.hostname)) {
+    throw new Error(`Rechazado: el host "${u.hostname}" no es local; fuera de CI e2e solo corre en localhost.`);
+  }
+}
+
 async function main() {
+  assertDisposable(serverEnv.DATABASE_URL);
   const sql = postgres(serverEnv.DATABASE_URL, { max: 1, onnotice: () => {} });
   await sql.unsafe("DROP SCHEMA IF EXISTS drizzle CASCADE; DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
   await sql.end();
