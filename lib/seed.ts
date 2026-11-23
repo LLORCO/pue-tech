@@ -195,3 +195,44 @@ export const seedEvents: TechEvent[] = raw.map((e) => ({
   submittedBy: "Moderación Cemita",
   ...e,
 }));
+
+// --- Datos ficticios para desarrollo (`npm run db:seed`) ---------------------
+// Derivados de los datos del MVP. Las fechas se desplazan en días completos para
+// que el primer evento caiga 2 días después de la fecha en que se carga el módulo.
+
+import type { CommunityInput, EventInput } from "./validation";
+import type { EventStatus } from "./db/schema";
+
+// `slug` es solo la clave con la que `devEvents` refiere a la comunidad; el slug real lo genera createCommunity.
+export const devCommunities: (CommunityInput & { slug: string })[] = seedCommunities.map((c) => ({
+  slug: c.slug,
+  name: c.name,
+  description: c.description,
+  topics: c.topics,
+  links: c.links,
+}));
+
+export type DevEvent = Omit<EventInput, "communityId"> & {
+  communitySlug: string | null;
+  status: EventStatus;
+};
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const firstStart = Math.min(...seedEvents.map((e) => new Date(e.start).getTime()));
+const shiftDays = Math.ceil((Date.now() + 2 * DAY_MS - firstStart) / DAY_MS);
+const shifted = (iso: string) => new Date(new Date(iso).getTime() + shiftDays * DAY_MS);
+
+// Casos de prueba manual: "observabilidad-101" sin comunidad (independiente) y
+// "arduino-y-cerveza" cancelado. El resto, publicado.
+export const devEvents: DevEvent[] = seedEvents.map((e) => ({
+  title: e.title,
+  description: e.description,
+  communitySlug: e.slug === "observabilidad-101" ? null : e.communitySlug,
+  startsAt: shifted(e.start),
+  endsAt: shifted(e.end),
+  venue: e.online ? "" : e.venue,
+  online: e.online,
+  registrationUrl: e.registrationUrl ?? null,
+  topics: e.topics,
+  status: e.slug === "arduino-y-cerveza" ? "cancelado" : "publicado",
+}));
