@@ -65,7 +65,7 @@ lib/validation.ts    esquemas Zod de los formularios
 lib/auth.ts, lib/auth/  configuración de Better Auth y sesión del panel
 lib/ics.ts, lib/og.ts   calendario e imágenes
 drizzle/             migraciones SQL
-scripts/             seed de desarrollo y alta del administrador
+scripts/             seed de desarrollo, alta y cambio de contraseña del administrador
 e2e/                 pruebas de Playwright y preparación de su base
 ```
 
@@ -81,6 +81,10 @@ El proyecto se despliega en Vercel con Postgres de Neon.
 3. Una sola vez, crea la cuenta del administrador contra la base de producción:
    ```bash
    DATABASE_URL=<url de Neon> ADMIN_EMAIL=... ADMIN_PASSWORD=... npm run admin:create
+   ```
+4. Para cambiar la contraseña del administrador (cierra sus sesiones abiertas). La contraseña nueva se pide en la terminal sin mostrarse:
+   ```bash
+   DATABASE_URL=<url de Neon> ADMIN_EMAIL=... npm run admin:password
    ```
 
 Producción arranca vacía: el seed de desarrollo no se usa ahí.

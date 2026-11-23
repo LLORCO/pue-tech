@@ -13,7 +13,8 @@
     "db:seed": "tsx --env-file-if-exists=.env.local scripts/seed-dev.ts",
     "typecheck": "next typegen && tsc --noEmit",
     "e2e": "playwright test",
-    "admin:create": "tsx --env-file-if-exists=.env.local scripts/create-admin.ts"
+    "admin:create": "tsx --env-file-if-exists=.env.local scripts/create-admin.ts",
+    "admin:password": "tsx --env-file-if-exists=.env.local scripts/change-admin-password.ts"
   },
   "dependencies": {
     "better-auth": "^1.7.27",
