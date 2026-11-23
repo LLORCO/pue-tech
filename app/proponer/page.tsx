@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useStore } from "@/lib/useStore";
-import { localToIso, validateEvent, type FieldErrors } from "@/lib/validate";
+import { validateEvent, type FieldErrors } from "@/lib/validate";
+import { localToIso } from "@/lib/datetime";
 import type { TechEvent } from "@/lib/types";
 import { Field, inputCls } from "@/components/Field";
 

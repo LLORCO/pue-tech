@@ -22,6 +22,3 @@ export function validateEvent(input: NewEventInput): FieldErrors {
   }
   return e;
 }
-
-// Puebla usa UTC-6 todo el año desde 2022.
-export const localToIso = (local: string) => (local ? `${local}:00-06:00` : "");
