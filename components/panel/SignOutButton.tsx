@@ -10,9 +10,16 @@ export function SignOutButton() {
 
   async function signOut() {
     setPending(true);
-    await authClient.signOut();
-    router.replace("/panel/login");
-    router.refresh();
+    try {
+      const { error } = await authClient.signOut();
+      if (error) return;
+      router.replace("/panel/login");
+      router.refresh();
+    } catch {
+      // Sin red: el botón vuelve a estar disponible para reintentar.
+    } finally {
+      setPending(false);
+    }
   }
 
   return (

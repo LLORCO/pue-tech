@@ -41,7 +41,13 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         </div>
         <CommunityFilter communities={communities} active={active} />
         {events.length === 0 ? (
-          <EmptyState />
+          <EmptyState
+            text={
+              active
+                ? "No hay eventos que coincidan con este filtro."
+                : "Todavía no hay eventos publicados. Vuelve pronto."
+            }
+          />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
             {events.map((e) => (

@@ -5,6 +5,14 @@ import { useState } from "react";
 import { Field, inputCls } from "@/components/Field";
 import { authClient } from "@/lib/auth-client";
 
+const GENERIC_ERROR = "No pudimos iniciar sesión. Inténtalo de nuevo.";
+
+function loginErrorMessage(status: number | undefined): string {
+  if (status === 429) return "Demasiados intentos. Espera unos segundos e inténtalo de nuevo.";
+  if (!status || status >= 500) return GENERIC_ERROR;
+  return "Correo o contraseña incorrectos";
+}
+
 export function LoginForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -15,17 +23,22 @@ export function LoginForm() {
     const form = new FormData(ev.currentTarget);
     setPending(true);
     setError(null);
-    const { error } = await authClient.signIn.email({
-      email: String(form.get("email") ?? ""),
-      password: String(form.get("password") ?? ""),
-    });
-    if (error) {
-      setError("Correo o contraseña incorrectos");
+    try {
+      const { error } = await authClient.signIn.email({
+        email: String(form.get("email") ?? ""),
+        password: String(form.get("password") ?? ""),
+      });
+      if (error) {
+        setError(loginErrorMessage(error.status));
+        return;
+      }
+      router.replace("/panel");
+      router.refresh();
+    } catch {
+      setError(GENERIC_ERROR);
+    } finally {
       setPending(false);
-      return;
     }
-    router.replace("/panel");
-    router.refresh();
   }
 
   return (

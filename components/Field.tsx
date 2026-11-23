@@ -9,4 +9,4 @@ export function Field({ label, error, children }: { label: string; error?: strin
 }
 
 export const inputCls =
-  "w-full rounded-lg border border-arena bg-white px-3 py-2 outline-none focus:border-vino";
+  "w-full rounded-lg border border-arena bg-white px-3 py-2 outline-none focus:border-vino focus-visible:ring-2 focus-visible:ring-vino/50";

@@ -44,7 +44,7 @@ export default async function EventPage({ params }: PageProps<"/eventos/[slug]">
       <p className="mt-1 text-tinta/70">{event.online ? "En línea" : event.venue}</p>
       <p className="mt-8 whitespace-pre-line text-lg leading-relaxed">{event.description}</p>
       <div className="mt-10 flex flex-wrap gap-3">
-        {event.registrationUrl && (
+        {event.registrationUrl && event.status !== "cancelado" && (
           <a
             href={event.registrationUrl}
             target="_blank"
